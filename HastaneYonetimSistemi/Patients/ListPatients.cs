@@ -68,5 +68,18 @@ namespace HastaneYonetimSistemi.Patients
             NewPatientModel patient = manager.ReadOne(patient_id);
             MessageBox.Show($"{patient.Firstname} {patient.Lastname}");
         }
+
+        private void menu_delete_patient_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bu kayıt silinecektir, emin misiniz?", "Hasta Kaydı Sil", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(result == DialogResult.Yes)
+            {
+                PatientManager manager = new PatientManager();
+                int patient_id = (int)dgv_patientList.SelectedRows[0].Cells[0].Value;
+                manager.Delete(patient_id);
+                MessageBox.Show("Hasta kaydı başarıyla silindi.");
+                FillList();
+            }
+        }
     }
 }

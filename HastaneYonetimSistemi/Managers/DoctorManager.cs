@@ -4,42 +4,39 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HastaneYonetimSistemi.Managers
 {
-    //interface (Arabirim) nesne türü: Sadece kalıtım benzeri eklenebilen, kod işletme özelliği bulunmayan, sınıfların şablonalarını sağlayan zorunlu alanları belirleyen kısıtlayıcı yapılardır. Hiç bir elemanı erişim belirleyici almaz, kod bloğu taşıyamaz, sadece metotların isimlerini taşır.
-    public interface IPatientManager
+    public interface IDoctorManager
     {
-        void Create(NewPatientModel model);
-        NewPatientModel ReadOne(int Id);
-        List<NewPatientModel> ReadAll();
-        void Update(NewPatientModel model);
+        void Create(NewDoctorModel model);
+        NewDoctorModel ReadOne(int Id);
+        List<NewDoctorModel> ReadAll();
+        void Update(NewDoctorModel model);
         void Delete(int Id);
     }
-
-    //arabirim implementasyonu:
-    public class PatientManager : IPatientManager
+    public class DoctorManager : IDoctorManager
     {
         private string connectionString;
-        public PatientManager()
+
+        public DoctorManager()
         {
             connectionString = ConfigurationManager.ConnectionStrings["HospitalDB"].ConnectionString;
         }
 
-        public void Create(NewPatientModel model)
+        public void Create(NewDoctorModel model)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Patient (RegisterDate, Active, Deleted, Firstname, Lastname, Address, City, District, BloodType, Gender, PhoneNumber, NationalId, DateOfBirth) VALUES (@RegisterDate, @Active, @Deleted, @Firstname, @Lastname, @Address, @City, @District, @BloodType, @Gender, @PhoneNumber, @NationalId, @DateOfBirth)";
+                string query = "INSERT INTO Doctor (RegisterDate, Active, Deleted, Firstname, Lastname, Department, Speciality, Email, BloodType, Gender, CallNumber, NationalId, DateOfBirth) VALUES (@RegisterDate, @Active, @Deleted, @Firstname, @Lastname, @Department, @Specialization, @Email, @BloodType, @Gender, @PhoneNumber, @NationalId, @DateOfBirth)";
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@Firstname", model.Firstname);
                 cmd.Parameters.AddWithValue("@Lastname", model.Lastname);
-                cmd.Parameters.AddWithValue("@Address", model.Address);
-                cmd.Parameters.AddWithValue("@City", model.City);
-                cmd.Parameters.AddWithValue("@District", model.District);
+                cmd.Parameters.AddWithValue("@Department", model.Department);
+                cmd.Parameters.AddWithValue("@Specialization", model.Specialization);
+                cmd.Parameters.AddWithValue("@Email", model.Email);
                 cmd.Parameters.AddWithValue("@BloodType", model.BloodType);
                 cmd.Parameters.AddWithValue("@Gender", model.Gender);
                 cmd.Parameters.AddWithValue("@PhoneNumber", model.PhoneNumber);
@@ -57,7 +54,7 @@ namespace HastaneYonetimSistemi.Managers
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "DELETE FROM Patient WHERE Id=@Id";
+                string query = "DELETE FROM Doctor WHERE Id=@Id";
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 connection.Open();
@@ -65,33 +62,33 @@ namespace HastaneYonetimSistemi.Managers
             }
         }
 
-        public List<NewPatientModel> ReadAll()
+        public List<NewDoctorModel> ReadAll()
         {
-            List<NewPatientModel> result = new List<NewPatientModel>();
+            List<NewDoctorModel> result = new List<NewDoctorModel>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT * FROM Patient";
+                string query = "SELECT * FROM Doctor";
                 SqlCommand cmd = new SqlCommand(query, connection);
                 connection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        result.Add(new NewPatientModel
+                        result.Add(new NewDoctorModel
                         {
                             Id = reader.GetInt32(0),
-                            RegisterDate = reader.GetDateTime(1),
-                            Active = reader.GetBoolean(2),
-                            Deleted = reader.GetBoolean(3),
-                            Firstname = reader.GetString(4),
-                            Lastname = reader.GetString(5),
-                            Address = reader.GetString(6),
-                            City = reader.GetString(7),
-                            District = reader.GetString(8),
-                            BloodType = reader.GetString(9),
-                            Gender = reader.GetString(10),
-                            PhoneNumber = reader.GetInt64(11),
-                            NationalId = reader.GetInt64(12),
+                            Firstname = reader.GetString(1),
+                            Lastname = reader.GetString(2),
+                            RegisterDate = reader.GetDateTime(3),
+                            Active = reader.GetBoolean(4),
+                            Deleted = reader.GetBoolean(5),
+                            Department = reader.GetString(6),
+                            Specialization = reader.GetString(7),
+                            PhoneNumber = reader.GetInt64(8),
+                            NationalId = reader.GetInt64(9),
+                            BloodType = reader.GetString(10),
+                            Gender = reader.GetString(11),
+                            Email = reader.GetString(12),
                             DateOfBirth = reader.GetDateTime(13)
                         });
                     }
@@ -100,13 +97,13 @@ namespace HastaneYonetimSistemi.Managers
             return result;
         }
 
-        public NewPatientModel ReadOne(int Id)
+        public NewDoctorModel ReadOne(int Id)
         {
-            NewPatientModel result = new NewPatientModel();
+            NewDoctorModel result = new NewDoctorModel();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT * FROM Patient WHERE Id=@Id";
+                string query = "SELECT * FROM Doctor WHERE Id=@Id";
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 connection.Open();
@@ -114,21 +111,21 @@ namespace HastaneYonetimSistemi.Managers
                 {
                     if (reader.Read())
                     {
-                        result = new NewPatientModel()
+                        result = new NewDoctorModel()
                         {
                             Id = reader.GetInt32(0),
-                            RegisterDate = reader.GetDateTime(1),
-                            Active = reader.GetBoolean(2),
-                            Deleted = reader.GetBoolean(3),
-                            Firstname = reader.GetString(4),
-                            Lastname = reader.GetString(5),
-                            Address = reader.GetString(6),
-                            City = reader.GetString(7),
-                            District = reader.GetString(8),
-                            BloodType = reader.GetString(9),
-                            Gender = reader.GetString(10),
-                            PhoneNumber = reader.GetInt64(11),
-                            NationalId = reader.GetInt64(12),
+                            Firstname = reader.GetString(1),
+                            Lastname = reader.GetString(2),
+                            RegisterDate = reader.GetDateTime(3),
+                            Active = reader.GetBoolean(4),
+                            Deleted = reader.GetBoolean(5),
+                            Department = reader.GetString(6),
+                            Specialization = reader.GetString(7),
+                            PhoneNumber = reader.GetInt64(8),
+                            NationalId = reader.GetInt64(9),
+                            BloodType = reader.GetString(10),
+                            Gender = reader.GetString(11),
+                            Email = reader.GetString(12),
                             DateOfBirth = reader.GetDateTime(13)
                         };
                     }
@@ -138,18 +135,18 @@ namespace HastaneYonetimSistemi.Managers
             return result;
         }
 
-        public void Update(NewPatientModel model)
+        public void Update(NewDoctorModel model)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Patient SET RegisterDate = @RegisterDate, Active = @Active, Deleted = @Deleted, Firstname = @Firstname, Lastname = @Lastname, Address = @Address, City = @City, District = @District, BloodType = @BloodType, Gender = @Gender, PhoneNumber = @PhoneNumber, NationalId = @NationalId, DateOfBirth = @DateOfBirth WHERE Id = @Id";
+                string query = "UPDATE Doctor SET RegisterDate = @RegisterDate, Active = @Active, Deleted = @Deleted, Firstname = @Firstname, Lastname = @Lastname, Department = @Department, Specialization = @Specialization, Email = @Email, BloodType = @BloodType, Gender = @Gender, CallNumber = @PhoneNumber, NationalId = @NationalId, DateOfBirth = @DateOfBirth WHERE Id = @Id";
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@Id", model.Id);
                 cmd.Parameters.AddWithValue("@Firstname", model.Firstname);
                 cmd.Parameters.AddWithValue("@Lastname", model.Lastname);
-                cmd.Parameters.AddWithValue("@Address", model.Address);
-                cmd.Parameters.AddWithValue("@City", model.City);
-                cmd.Parameters.AddWithValue("@District", model.District);
+                cmd.Parameters.AddWithValue("@Department", model.Department);
+                cmd.Parameters.AddWithValue("@Specialization", model.Specialization);
+                cmd.Parameters.AddWithValue("@Email", model.Email);
                 cmd.Parameters.AddWithValue("@BloodType", model.BloodType);
                 cmd.Parameters.AddWithValue("@Gender", model.Gender);
                 cmd.Parameters.AddWithValue("@PhoneNumber", model.PhoneNumber);

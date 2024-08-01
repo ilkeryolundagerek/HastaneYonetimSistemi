@@ -51,5 +51,10 @@ namespace HastaneYonetimSistemi
         {
             openForm(new Patients.ListPatients());
         }
+
+        private void menu_item_newDoctor_Click(object sender, EventArgs e)
+        {
+            openForm(new Doctors.NewDoctor());
+        }
     }
 }

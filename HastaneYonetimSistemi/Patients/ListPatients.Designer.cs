@@ -180,7 +180,7 @@
             this.menu_refresh_patientList,
             this.menu_add_appointment});
             this.patientList_options.Name = "patientList_options";
-            this.patientList_options.Size = new System.Drawing.Size(145, 92);
+            this.patientList_options.Size = new System.Drawing.Size(181, 114);
             // 
             // menu_edit_patient
             // 
@@ -194,6 +194,7 @@
             this.menu_delete_patient.Name = "menu_delete_patient";
             this.menu_delete_patient.Size = new System.Drawing.Size(180, 22);
             this.menu_delete_patient.Text = "Sil";
+            this.menu_delete_patient.Click += new System.EventHandler(this.menu_delete_patient_Click);
             // 
             // menu_refresh_patientList
             // 

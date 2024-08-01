@@ -40,7 +40,7 @@
             this.randevuEkleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randevularıListeleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.doktorlarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.yeniDoktorEkleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menu_item_newDoctor = new System.Windows.Forms.ToolStripMenuItem();
             this.doktorBilgileriniGörüntüleGüncelleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randevularıListeleToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.personelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -152,18 +152,19 @@
             // doktorlarToolStripMenuItem
             // 
             this.doktorlarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.yeniDoktorEkleToolStripMenuItem,
+            this.menu_item_newDoctor,
             this.doktorBilgileriniGörüntüleGüncelleToolStripMenuItem,
             this.randevularıListeleToolStripMenuItem1});
             this.doktorlarToolStripMenuItem.Name = "doktorlarToolStripMenuItem";
             this.doktorlarToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
             this.doktorlarToolStripMenuItem.Text = "Doktorlar";
             // 
-            // yeniDoktorEkleToolStripMenuItem
+            // menu_item_newDoctor
             // 
-            this.yeniDoktorEkleToolStripMenuItem.Name = "yeniDoktorEkleToolStripMenuItem";
-            this.yeniDoktorEkleToolStripMenuItem.Size = new System.Drawing.Size(269, 22);
-            this.yeniDoktorEkleToolStripMenuItem.Text = "Yeni Doktor Ekle";
+            this.menu_item_newDoctor.Name = "menu_item_newDoctor";
+            this.menu_item_newDoctor.Size = new System.Drawing.Size(269, 22);
+            this.menu_item_newDoctor.Text = "Yeni Doktor Ekle";
+            this.menu_item_newDoctor.Click += new System.EventHandler(this.menu_item_newDoctor_Click);
             // 
             // doktorBilgileriniGörüntüleGüncelleToolStripMenuItem
             // 
@@ -337,7 +338,7 @@
         private System.Windows.Forms.ToolStripMenuItem randevuEkleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem randevularıListeleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem doktorlarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem yeniDoktorEkleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menu_item_newDoctor;
         private System.Windows.Forms.ToolStripMenuItem doktorBilgileriniGörüntüleGüncelleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem randevularıListeleToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem personelToolStripMenuItem;

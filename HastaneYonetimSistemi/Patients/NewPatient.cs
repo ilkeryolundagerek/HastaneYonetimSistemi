@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Linq;
 using HastaneYonetimSistemi.Models;
 using HastaneYonetimSistemi.Managers;
+using HastaneYonetimSistemi.Utils;
 
 namespace HastaneYonetimSistemi.Patients
 {
@@ -39,7 +40,7 @@ namespace HastaneYonetimSistemi.Patients
                 validation_status = false;
             }
 
-            if (!tcknCheck(mtb_patient_tckn.Text))
+            if (!mtb_patient_tckn.Text.IsTCKN())
             {
                 message += "Geçerli bir kimlik numarası girilmelidir.\n";
                 validation_status = false;
